@@ -41,58 +41,37 @@ class MyTribe(Tribe):
         self.name = "Mana"
 
     def hunt(self, sesChoix):
-        #Détecter le début de partie pour pouvoir commencer par de la coop
-        print(sesChoix)
-        if sesChoix[0] == -1:
-            return 0
 
-        #Chaque 10 tours, vérifier si la moyenne est supérieure à 1.5. Sinon, renoncer
+        nbC = 0
+        nbT = 0
+        nbR = 0
+        mancheAct = 0
+        for i in range(len(sesChoix)):
+            # Nombre de coopérations de la part de l'adversaire à chaque manche
+            if sesChoix[i] == 0:
+                if sesChoix[i - 1] != 0:
+                    nbc = 0
+                else:
+                    nbC += 1
+            # Nombre de trahisons de la part de l'adversaire à chaque manche
+            elif sesChoix[i] == 1:
+                nbT += 1
 
-        #Obtenir le numéro de manche actuelle
-        roundActuel= 0
-        nbDizaine = 0
-        moy = 0
-        dizaineTab = list()
-        nbTrahison = 0
-        global phaseTrahison
-        for i in sesChoix:
-            if sesChoix[i] != -1:
-                roundActuel += 1
-                moy += sesChoix[i]
-                dizaineTab.append(sesChoix[i])
-
-                print("\nRound:", roundActuel)
-                print("Valeur:", i)
-
-                #Vérifier toutes les 10 manches la moyenne des 10 manches précédentes
-                if roundActuel % 20 == 0:
-                    nbDizaine += 1
-                    moy /= 10
-                    print("Moyenne:", moy)
-                    print("Tableau:", dizaineTab)
-
-                    #Si la moyenne est inférieure à 1.5, on renonce
-                    if moy <= 1.5:
-                        return 2
-
-                    #Renoncer si il a renoncé le tour précédent
-                    if sesChoix[i] == 2:
-                        return 2
-
-                    #Récupérer le nombre de trahison sur les 10 dernières manches
-                    for j in range(0, len(dizaineTab), 1):
-                        if dizaineTab[j] == 1:
-                            nbTrahison += 1
-                            return 2
-
-                    dizaineTab.clear()
-                    #TODO:
-                    # - Si il renonce, renoncer aussi
-                    # - Récupérer le nombre de trahison (sur les 10 dernières? Nb total?)
-                    # - Si j'ai été trahis le tour précédent, trahir en retour
-
-
-                    moy = 0
+            # Nombre de renonciations de la part de l'adversaire à chaque manche
+            elif sesChoix[i]:
+                if sesChoix[i - 1] != 0:
+                    nbR = 0
+                else:
+                    nbR += 1
+            else:
+                mancheAct += 1
+        # decider de l'odre
+        if nbC > 3:
+            return 1
+        if nbR > 3:
+            return 2
+        if nbT > 3:
+            return 2
 
         return 1
 
