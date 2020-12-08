@@ -1,4 +1,5 @@
 import random
+import math
 
 class Tribe:
     name = ""
@@ -23,6 +24,7 @@ class CoopTribe(Tribe):
         self.name = "coopTribe"
 
     def hunt(self, sesChoix):
+
         return 0
 
 class RndTribe(Tribe):
@@ -39,9 +41,25 @@ class MyTribe(Tribe):
         self.name = "Waimaka"
 
     def hunt(self, sesChoix):
+        #Détecter le début de partie pour pouvoir commencer par de la coop
+        print(sesChoix)
+        if sesChoix[0] == -1:
+            return 0
 
+        #Chaque 10 tours, vérifier si la moyenne est supérieure à 1.5. Sinon, renoncer
+
+        #Obtenir le numéro de manche actuelle
+        roundActuel= 0
+        nbDizaine = 0
+        for i in sesChoix:
+            if sesChoix[i] != -1:
+                roundActuel += 1
+
+                #Vérifier toutes les 10 manches
+                if roundActuel % 10 == 0:
+                    nbDizaine += 1
+                print(roundActuel)
         return 0
-
 
 
 def match(t1, t2, nbRounds):
