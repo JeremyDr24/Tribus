@@ -51,14 +51,31 @@ class MyTribe(Tribe):
         #Obtenir le numéro de manche actuelle
         roundActuel= 0
         nbDizaine = 0
+        moy = 0
         for i in sesChoix:
             if sesChoix[i] != -1:
                 roundActuel += 1
+                moy += sesChoix[i]
 
-                #Vérifier toutes les 10 manches
+                print("\nRound:", roundActuel)
+                print("Valeur:", i)
+
+                #Vérifier toutes les 10 manches la moyenne des 10 manches précédentes
                 if roundActuel % 10 == 0:
                     nbDizaine += 1
-                print(roundActuel)
+                    moy /= 10
+                    print("Moyenne:", moy)
+
+                    #Si la moyenne est inférieure à 1.5, on renonce
+                    if moy <= 1.5:
+                        return 2
+
+
+                    moy = 0
+
+
+
+
         return 0
 
 
