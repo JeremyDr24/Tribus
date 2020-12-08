@@ -69,6 +69,9 @@ class MyTribe(Tribe):
                     #Si la moyenne est inférieure à 1.5, on renonce
                     if moy <= 1.5:
                         return 2
+                    #TODO:
+                    # - Récupérer le nombre de trahison (sur les 10 dernières? Nb total?)
+                    # - Si j'ai été trahis le tour précédent, trahir en retour
 
 
                     moy = 0
