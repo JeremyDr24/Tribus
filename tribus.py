@@ -93,10 +93,14 @@ class MyTribe(Tribe):
                     for j in range(0, len(vingtaineTab), 1):
                         if vingtaineTab[j] == 1:
                             nbTrahison += 1
+
                             # TODO: Si 2 trahison de suite, alors renoncer
-                            elif nbTrahison >= 2:
-                                ret = 2
-                                nbTrahison = 0
+                            for k in range(0, len(vingtaineTab)-1, 2):
+                                if vingtaineTab[j] == vingtaineTab[k]:
+                                    ret = 2
+                                elif nbTrahison >= 2:
+                                    ret = 2
+                                    nbTrahison = 0
 
                     # Récupérer le nombre de renonciations sur les 20 dernières manches
                     for j in range(0, len(vingtaineTab), 1):
