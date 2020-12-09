@@ -129,7 +129,6 @@ class MyTribe(Tribe):
             if decisionPrise == False:
                 rand = random.randint(0, 1)
                 if rand == 0:
-                    print("HEHEHEHEHE")
                     ret = 1
 
         return ret
