@@ -58,17 +58,21 @@ class MyTribe(Tribe):
         # Détecter le début de partie pour pouvoir commencer par de la coop
         print(sesChoix)
         if sesChoix[0] == -1:
-            return 0
+            return 2
 
         # Obtenir le numéro de manche actuelle
         for i in sesChoix:
+
+            #Retour par défault si aucune décision prise
+            ret = 1
+
             if sesChoix[i] != -1:
                 roundActuel += 1
                 moy += sesChoix[i]
                 vingtaineTab.append(sesChoix[i])
 
                 print("\nRound:", roundActuel)
-                print("Valeur:", i)
+                print("Valeur:", sesChoix[i])
 
                 # Calculer toutes les 20 manches la moyenne
                 if roundActuel % 20 == 0:
@@ -85,16 +89,20 @@ class MyTribe(Tribe):
                     for j in range(0, len(vingtaineTab), 1):
                         if vingtaineTab[j] == 0:
                             nbCoop += 1
-                            if nbCoop >= 3:
-                                ret = 1
-                                nbCoop = 0
+
+                            for k in range(0, len(vingtaineTab) - 1, 2):
+                                if vingtaineTab[j] == vingtaineTab[k]:
+                                    ret = 1
+                                elif nbCoop >= 3:
+                                    ret = 1
+                                    nbCoop = 0
 
                     # Récupérer le nombre de trahisons sur les 20 dernières manches
                     for j in range(0, len(vingtaineTab), 1):
                         if vingtaineTab[j] == 1:
                             nbTrahison += 1
 
-                            # TODO: Si 2 trahison de suite, alors renoncer
+                            # Si 2 trahison de suite, alors renoncer
                             for k in range(0, len(vingtaineTab)-1, 2):
                                 if vingtaineTab[j] == vingtaineTab[k]:
                                     ret = 2
@@ -106,9 +114,13 @@ class MyTribe(Tribe):
                     for j in range(0, len(vingtaineTab), 1):
                         if vingtaineTab[j] == 2:
                             nbRenon += 1
-                            if nbRenon >= 3:
-                                ret = 2
-                                nbRenon = 0
+
+                            for k in range(0, len(vingtaineTab)-1, 2):
+                                if vingtaineTab[j] == vingtaineTab[k]:
+                                    ret = 2
+                                elif nbRenon >= 3:
+                                    ret = 2
+                                    nbRenon = 0
 
                     vingtaineTab.clear()
                     moy = 0
