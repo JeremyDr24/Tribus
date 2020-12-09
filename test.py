@@ -37,43 +37,44 @@ class RndTribe(Tribe):
 
 class MyTribe(Tribe):
 
-    def __init__(self):
-        self.name = "Mana"
+   def __init__(self):
+       self.name = "Mana"
 
-    def hunt(self, sesChoix):
+   def hunt(self, sesChoix):
 
-        nbC = 0
-        nbT = 0
-        nbR = 0
-        mancheAct = 0
-        for i in range(len(sesChoix)):
-            # Nombre de coopérations de la part de l'adversaire à chaque manche
-            if sesChoix[i] == 0:
-                if sesChoix[i - 1] != 0:
-                    nbc = 0
-                else:
-                    nbC += 1
-            # Nombre de trahisons de la part de l'adversaire à chaque manche
-            elif sesChoix[i] == 1:
-                nbT += 1
 
-            # Nombre de renonciations de la part de l'adversaire à chaque manche
-            elif sesChoix[i]:
-                if sesChoix[i - 1] != 0:
-                    nbR = 0
-                else:
-                    nbR += 1
-            else:
-                mancheAct += 1
-        # decider de l'odre
-        if nbC > 3:
-            return 1
-        if nbR > 3:
-            return 2
-        if nbT > 3:
-            return 2
+       nbC=0
+       nbT=0
+       nbR=0
+       mancheAct=0
+       for i in range(len(sesChoix)):
+           #Nombre de coopérations de la part de l'adversaire à chaque manche
+           if sesChoix[i]==0:
+               if sesChoix[i-1]!=0:
+                   nbc=0
+               else:
+                   nbC+=1
+           # Nombre de trahisons de la part de l'adversaire à chaque manche
+           elif sesChoix[i]==1:
+               nbT+=1
 
-        return 1
+           # Nombre de renonciations de la part de l'adversaire à chaque manche
+           elif sesChoix[i]:
+               if sesChoix[i - 1] != 0:
+                   nbR = 0
+               else:
+                   nbR+=1
+           else:
+               mancheAct+=1
+       #decider de l'odre
+       if nbC>3:
+           return 1
+       if nbR>3:
+           return 2
+       if nbT>3:
+           return 2
+
+       return 0
 
 
 def match(t1, t2, nbRounds):
