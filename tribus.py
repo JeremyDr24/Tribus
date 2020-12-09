@@ -84,7 +84,7 @@ class MyTribe(Tribe):
                     # Si la moyenne est inférieure à 1.5, on effectue une action aléatoire pour ne pas être prévisible
                     if moy < 1.5 and sesChoix[i] != 1:
                         ranInt = random.randint(0, 3)
-                        ret = ranInt
+                        ret = 1
 
                     # Récupérer le nombre de coopérations sur les 20 dernières manches
                     for j in range(0, len(vingtaineTab), 1):
