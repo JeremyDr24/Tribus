@@ -46,16 +46,13 @@ class MyTribe(Tribe):
 
     def hunt(self, sesChoix):
 
-        roundActuel = 1
+        #Déclaratin et initialisation des variables
+        roundActuel = 0
         moy = 0
         vingtaineTab = list()
-
         nbTrahison = 0
         nbCoop = 0
         nbRenon = 0
-
-        global phaseTrahison
-        phaseTrahison = []
         ret = 0
 
         # Détecter le début de partie pour pouvoir commencer par de la coop
@@ -79,13 +76,10 @@ class MyTribe(Tribe):
                     print("Moyenne:", moy)
                     print("Tableau:", vingtaineTab)
 
-                    # Si la moyenne est inférieure à 1.5, on renonce
-                    if moy <= 1.5:
-                        ret = 2
-
-                    # Renoncer si il a renoncé le tour précédent
-                    if sesChoix[i] == 2:
-                        ret = 2
+                    # Si la moyenne est inférieure à 1.5, on effectue une action aléatoire pour ne pas être prévisible
+                    if moy < 1.5 and sesChoix[i] != 1:
+                        ranInt = random.randint(0, 3)
+                        ret = ranInt
 
                     # Récupérer le nombre de coopérations sur les 20 dernières manches
                     for j in range(0, len(vingtaineTab), 1):
@@ -95,17 +89,22 @@ class MyTribe(Tribe):
                                 ret = 1
                                 nbCoop = 0
 
-
                     # Récupérer le nombre de trahisons sur les 20 dernières manches
                     for j in range(0, len(vingtaineTab), 1):
                         if vingtaineTab[j] == 1:
                             nbTrahison += 1
+                            # TODO: Si 2 trahison de suite, alors renoncer
+                            elif nbTrahison >= 2:
+                                ret = 2
+                                nbTrahison = 0
 
-                    # Récupérer le nombre de coopérations sur les 20 dernières manches
+                    # Récupérer le nombre de renonciations sur les 20 dernières manches
                     for j in range(0, len(vingtaineTab), 1):
                         if vingtaineTab[j] == 2:
                             nbRenon += 1
-
+                            if nbRenon >= 3:
+                                ret = 2
+                                nbRenon = 0
 
                     vingtaineTab.clear()
                     moy = 0
