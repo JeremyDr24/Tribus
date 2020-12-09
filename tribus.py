@@ -54,6 +54,7 @@ class MyTribe(Tribe):
         nbCoop = 0
         nbRenon = 0
         ret = 0
+        decisionPrise = False
 
         # Détecter le début de partie pour pouvoir commencer par de la coop
         print(sesChoix)
@@ -125,12 +126,13 @@ class MyTribe(Tribe):
                     vingtaineTab.clear()
                     moy = 0
 
-        return ret
+            if decisionPrise == False:
+                rand = random.randint(0, 1)
+                if rand == 0:
+                    print("HEHEHEHEHE")
+                    ret = 1
 
-                    #TODO:
-                    # - Si il renonce, renoncer aussi
-                    # - Récupérer le nombre de trahison (sur les 10 dernières? Nb total?)
-                    # - Si j'ai été trahis le tour précédent, trahir en retour
+        return ret
 
 def match(t1, t2, nbRounds):
     r1 = 0  # récompenses tribu1
